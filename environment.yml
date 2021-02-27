@@ -1,0 +1,24 @@
+name: simco
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - emcee
+  - flake8
+  - gpy
+  - interrogate  # A tool for docstring coverage
+  - jupyter
+  - matplotlib
+  - mock
+  - mypy
+  - numpy
+  - pandas
+  - param
+  - pip=20.1.1
+  - python>=3.8
+  - python-dotenv
+  - scipy
+  - seaborn
+  - pip:
+      - pytesseract
+      - tables

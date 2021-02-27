@@ -1,0 +1,13 @@
+# Python
+__pycache__
+
+# VS code
+.vscode
+
+# Jupyter
+.ipynb_checkpoints
+
+CommodityPrices
+SalesOfficePrices
+SalesOfficeText
+prices.csv
