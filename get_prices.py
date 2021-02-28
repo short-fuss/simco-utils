@@ -174,7 +174,7 @@ def main():
         df.to_csv(f'{args.output_dir}/{timestr}.csv')
     elif args.format == 'hdf':
         df.to_hdf('prices.hdf', 'commodity_prices')
-        df.to_csv(f'{args.output_dir}/{timestr}.hdf', 'commodity_prices')
+        df.to_hdf(f'{args.output_dir}/{timestr}.hdf', 'commodity_prices')
     else:
         raise ValueError(f'Unknown format: {args.format}')
 
