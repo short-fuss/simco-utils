@@ -36,11 +36,13 @@ The first option is to save screenshots of your orders (as PNG files). E.g.
 <p align="center">
   <img width="500" src="example_salesoffice.png" alt="Sales Office orders example">
 </p>
-![Sales Office orders example](example_salesoffice.png)
 
 Under the hood, the tesseract optical character recognition (OCR) system is used to extract the text from the image. This is then converted to an HDF file (via `pandas`) that contains the prices in the *terms*. 
 
-Then you can call `python parse_salesoffice.py --economy=N example_salesoffice.png`
+Then you can call 
+```bash
+python parse_salesoffice.py --economy=N example_salesoffice.png
+```
 
 The economy argument is required. You should supply either `N` (normal), `R` (recession) or `B` (boom). This economy key is then stored alongside the prices.
 
