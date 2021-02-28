@@ -5,7 +5,7 @@ import argparse
 from collections import OrderedDict
 import urllib.request
 import ast
-import time
+import time, os
 
 commodity_dict = OrderedDict({
     1:  'Power',
@@ -158,6 +158,7 @@ def create_parser() -> argparse.ArgumentParser:
 def main():
     parser = create_parser()
     args = parser.parse_args()
+    os.makedirs(args.output_dir, exist_ok=True)
 
     # Main loop for obtaining offers and extracting prices by Q
     prices = [get_prices_by_q(get_offers(id)) for id, name in commodity_dict.items()]
@@ -167,7 +168,6 @@ def main():
     print(df)
 
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    os.makedirs(args.output_dir, exist_ok=True)
 
     if args.format == 'csv':
         df.to_csv('prices.csv')
