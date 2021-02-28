@@ -87,7 +87,7 @@ class Prices:
 
     def get_commodity(self, commodity, maximum_quality=None):
         rows = [df.loc[commodity] for df in self.history]
-        df = pd.DataFrame(rows)
+        df = pd.DataFrame(rows).sort_values('Time')
         #df = df.dropna(axis=1)
         if maximum_quality is None:
             return df
