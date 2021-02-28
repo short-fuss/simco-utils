@@ -9,6 +9,7 @@ __pycache__
 
 CommodityPrices
 SalesOfficePrices
+SalesOfficeQuantities
 SalesOfficeText
 prices.csv
 prices.hdf

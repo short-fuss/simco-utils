@@ -1,7 +1,6 @@
 from PIL import Image
 import pytesseract
-from pathlib import Path
-import glob
+import pathlib
 import argparse
 import os, time
 import numpy as np
@@ -41,20 +40,25 @@ def load_textfile(ss):
     return ps, qs
 
 
-def process_record(ps, ctime, economy, filename, key):
+def process_record(ps, ctime, economy, output_path, key):
+    os.makedirs(output_path.parent, exist_ok=True)
     df = pd.DataFrame.from_records(ps)
     df['Time'] = ctime
     df['Economy'] = economy
-    df.to_hdf(filename, key, mode='w')
-    print('Wrote file:', filename)
+    if output_path.suffix == '.hdf':
+        df.to_hdf(output_path, key, mode='w')
+    elif output_path.suffix == '.csv':
+        df.to_csv(output_path, mode='w')
+    print('Wrote file:', output_path)
 
 
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("file", type=str, help="File to convert")
-    parser.add_argument("--output_dir", type=str, default="SalesOfficePrices", help="Directory to store outputs")
+    parser.add_argument("--prices_dir", type=str, default="SalesOfficePrices", help="Directory to store prices")
+    parser.add_argument("--quantities_dir", type=str, default="SalesOfficeQuantities", help="Directory to store quantities")
     parser.add_argument("--economy", choices=['R', 'N', 'B'], help="Economy")
-    parser.add_argument("--overwrite", action='store_true', help="Overwrite existing results HDF")
+    parser.add_argument("--overwrite", default=False, action='store_true', help="Overwrite existing results HDF")
     return parser
 
 
@@ -68,9 +72,8 @@ def main():
     ctime = np.datetime64(time.strftime('%Y-%m-%d %H:%M:%S', created))
     ftime = time.strftime('%Y-%m-%d T%H%M%S', created)
 
-    os.makedirs(args.output_dir, exist_ok=True)
-    filename = f'{args.output_dir}/{ftime}.hdf'
-    if os.path.exists(filename) and not(args.overwrite):
+    prices_path = pathlib.Path(f'{args.prices_dir}/{ftime}.hdf')
+    if os.path.exists(prices_path) and not(args.overwrite):
         print('Target already exists:', filename)
     else:
         if ext == '.png':
@@ -78,8 +81,9 @@ def main():
             ps = load_screenshot(args.file)
         else:
             ps, qs = load_textfile(args.file)
-            process_record(qs, ctime, args.economy, filename, 'quantities')            
-        process_record(ps, ctime, args.economy, filename, 'prices')
+            quantities_path = pathlib.Path(f'{args.quantities_dir}/{ftime}.hdf')
+            process_record(qs, ctime, args.economy, quantities_path, 'quantities')            
+        process_record(ps, ctime, args.economy, prices_path, 'prices')
     
     return
 
