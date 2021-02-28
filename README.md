@@ -21,7 +21,9 @@ python get_prices
 This will pull down all exchange listings from the SimCompanies API and store the current best price for each quality level of each commodity. The file will be stored as a CSV in the top-level file `prices.csv` (always overwritten), and in a storage folder with date-stamp to keep your own  history. By default, this is set to the folder `CommodityPrices`, which is on the git ignore list.
 
 The `plotting.py` module provides plotting utilities, which are demonstrated in the Jupyter notebook `price_history.ipynb`. An example plot for the price history of Carbon Composite is shown here:
-![Price history for Carbon Composite](example.png)
+<p align="center">
+  <img width="493" src="example.png" alt="Price history for Carbon Composite">
+</p>
 
 Note how the economy is also indicated in the axis abscissa. This is made possible by a manually-maintained list of economy changes in the `Prices` class defined in `plotting.py`.
 
@@ -31,6 +33,9 @@ The `parse_salesoffice.py` utility enables you to keep track of your Sales Offic
 
 ### 1. PNG screenshots
 The first option is to save screenshots of your orders (as PNG files). E.g.
+<p align="center">
+  <img width="500" src="example_salesoffice.png" alt="Sales Office orders example">
+</p>
 ![Sales Office orders example](example_salesoffice.png)
 
 Under the hood, the tesseract optical character recognition (OCR) system is used to extract the text from the image. This is then converted to an HDF file (via `pandas`) that contains the prices in the *terms*. 
