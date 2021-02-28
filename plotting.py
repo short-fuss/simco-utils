@@ -1,4 +1,4 @@
-import glob
+import pathlib
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -55,12 +55,17 @@ def compute_stats(tr, pr):
     return current, E_p_x, sig_p, z_score
 
 class Prices:
-    def __init__(self, initial_time=np.datetime64('2020-10-08T15')):
+    def __init__(self, prices_folder='CommodityPrices', initial_time=np.datetime64('2020-10-08T15')):
         self.history = []
-        for file_name in glob.glob('CommodityPrices/*.csv'):
-            df = pd.read_csv(file_name, index_col=0, low_memory=False)
-            datetime_str = file_name.split('\\')[1].replace('.csv','')
-            timestamp = datetime.datetime.strptime(datetime_str, "%Y%m%d-%H%M%S")
+        folder = pathlib.Path(prices_folder)
+        for file_name in folder.glob('*.*'):
+            if file_name.suffix == '.csv':
+                df = pd.read_csv(file_name, index_col=0, low_memory=False)
+            elif file_name.suffix == '.hdf':
+                df = pd.read_hdf(file_name, key='commodity_prices', index_col=0, low_memory=False)
+            else:
+                raise Exception(f'Unsupported extension: {file_name.suffix}')
+            timestamp = datetime.datetime.strptime(file_name.stem, "%Y%m%d-%H%M%S")
             df.insert(0, 'Time', timestamp)
             if timestamp > initial_time:
                 self.history.append(df)
