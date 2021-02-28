@@ -151,7 +151,7 @@ def get_prices_by_q(offers):
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output_dir", type=str, default="CommodityPrices", help="Directory to store outputs")
-    parser.add_argument("--format", type=str, default='hdf', help="Choose output format (CSV, HDF)")
+    parser.add_argument("--format", type=str, default='csv', help="Choose output format (CSV, HDF)")
     return parser
 
 
