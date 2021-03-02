@@ -74,7 +74,7 @@ def main():
 
     prices_path = pathlib.Path(f'{args.prices_dir}/{ftime}.hdf')
     if os.path.exists(prices_path) and not(args.overwrite):
-        print('Target already exists:', filename)
+        print('Target already exists:', prices_path)
     else:
         if ext == '.png':
             # N.B. OCR doesn't recognise the quantities bar
