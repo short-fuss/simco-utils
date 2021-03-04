@@ -57,7 +57,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument("file", type=str, help="File to convert")
     parser.add_argument("--prices_dir", type=str, default="SalesOfficePrices", help="Directory to store prices")
     parser.add_argument("--quantities_dir", type=str, default="SalesOfficeQuantities", help="Directory to store quantities")
-    parser.add_argument("--economy", choices=['R', 'N', 'B'], help="Economy")
+    parser.add_argument("--economy", default='N', choices=['R', 'N', 'B'], help="Economy")
     parser.add_argument("--overwrite", default=False, action='store_true', help="Overwrite existing results HDF")
     return parser
 
