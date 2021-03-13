@@ -82,6 +82,7 @@ class Prices:
             [np.datetime64('2021-01-29T15'), 'Recession'],
             [np.datetime64('2021-02-05T15'), 'Normal'],
             [np.datetime64('2021-03-05T15'), 'Recession'],
+            [np.datetime64('2021-03-12T15'), 'Normal'],
         ]
         #self.economy_history = [eh for eh in self.economy_history if eh[0] > self.t0]
         self.economy_history.append([np.datetime64(datetime.datetime.now()), self.economy_history[-1][1]])
