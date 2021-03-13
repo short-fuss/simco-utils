@@ -1,6 +1,6 @@
 from PIL import Image
 import pytesseract
-import pathlib
+from pathlib import Path
 import argparse
 import os, time
 import numpy as np
@@ -68,11 +68,10 @@ def main():
 
     print('Processing ', args.file)
     ext = os.path.splitext(args.file)[1]
-    created = time.localtime(os.path.getmtime(args.file))
-    ctime = np.datetime64(time.strftime('%Y-%m-%d %H:%M:%S', created))
-    ftime = time.strftime('%Y-%m-%d T%H%M%S', created)
-
-    prices_path = pathlib.Path(f'{args.prices_dir}/{ftime}.hdf')
+    fname = Path(args.file).stem
+    ctime = np.array(pd.to_datetime(fname, yearfirst=True), dtype=np.datetime64)
+    
+    prices_path = Path(f'{args.prices_dir}/{fname}.hdf')
     if os.path.exists(prices_path) and not(args.overwrite):
         print('Target already exists:', prices_path)
     else:
@@ -81,7 +80,7 @@ def main():
             ps = load_screenshot(args.file)
         else:
             ps, qs = load_textfile(args.file)
-            quantities_path = pathlib.Path(f'{args.quantities_dir}/{ftime}.hdf')
+            quantities_path = Path(f'{args.quantities_dir}/{fname}.hdf')
             process_record(qs, ctime, args.economy, quantities_path, 'quantities')            
         process_record(ps, ctime, args.economy, prices_path, 'prices')
     
