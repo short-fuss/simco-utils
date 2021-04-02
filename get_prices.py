@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import argparse
+import tqdm
 
 from collections import OrderedDict
 import urllib.request
@@ -115,7 +116,7 @@ commodity_dict = OrderedDict({
 
 
 def get_offers(id):
-    print('- Obtaining offers for %s' % commodity_dict[id])
+    #print('- Obtaining offers for %s' % commodity_dict[id])
     response = urllib.request.urlopen('https://www.simcompanies.com/api/v2/market/%d' % id)
     dict_str = response.read().decode("UTF-8").replace("false", "False").replace("true", "True").replace("null", "None")
     try:
@@ -161,7 +162,7 @@ def main():
     os.makedirs(args.output_dir, exist_ok=True)
 
     # Main loop for obtaining offers and extracting prices by Q
-    prices = [get_prices_by_q(get_offers(id)) for id, name in commodity_dict.items()]
+    prices = [get_prices_by_q(get_offers(id)) for id, name in tqdm.tqdm(commodity_dict.items())]
 
     # Convert to dataframe to facilitate writing to CSV/HDF
     df = pd.DataFrame(prices, index=commodity_dict.values()).sort_index()
