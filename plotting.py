@@ -54,6 +54,26 @@ def compute_stats(tr, pr):
     
     return current, E_p_x, sig_p, z_score
 
+economy_history = [
+    [np.datetime64('2020-07-29T15'), 'Recession'], 
+    [np.datetime64('2020-08-07T15'), 'Normal'], 
+    [np.datetime64('2020-08-21T15'), 'Recession'], 
+    [np.datetime64('2020-09-11T15'), 'Normal'], 
+    [np.datetime64('2020-09-25T15'), 'Boom'], 
+    [np.datetime64('2020-10-02T15'), 'Normal'], 
+    [np.datetime64('2020-11-27T15'), 'Boom'],
+    [np.datetime64('2020-12-11T15'), 'Normal'],
+    [np.datetime64('2020-12-18T15'), 'Boom'],
+    [np.datetime64('2020-12-25T15'), 'Normal'],
+    [np.datetime64('2021-01-29T15'), 'Recession'],
+    [np.datetime64('2021-02-05T15'), 'Normal'],
+    [np.datetime64('2021-03-05T15'), 'Recession'],
+    [np.datetime64('2021-03-12T15'), 'Normal'],
+    [np.datetime64('2021-03-26T15'), 'Boom'],
+    [np.datetime64('2021-04-02T15'), 'Normal'],
+    [np.datetime64('2021-04-09T15'), 'Recession'],
+]
+
 class Prices:
     def __init__(self, prices_folder='CommodityPrices', initial_time=np.datetime64('2020-10-08T15')):
         self.history = []
@@ -73,21 +93,7 @@ class Prices:
 
         self.colors = prop_cycle.by_key()['color']
         self.t0 = initial_time
-        self.economy_history = [
-            [np.datetime64('2020-10-08T15'), 'Normal'], 
-            [np.datetime64('2020-11-27T15'), 'Boom'],
-            [np.datetime64('2020-12-11T15'), 'Normal'],
-            [np.datetime64('2020-12-18T15'), 'Boom'],
-            [np.datetime64('2020-12-25T15'), 'Normal'],
-            [np.datetime64('2021-01-29T15'), 'Recession'],
-            [np.datetime64('2021-02-05T15'), 'Normal'],
-            [np.datetime64('2021-03-05T15'), 'Recession'],
-            [np.datetime64('2021-03-12T15'), 'Normal'],
-            [np.datetime64('2021-03-26T15'), 'Boom'],
-            [np.datetime64('2021-04-02T15'), 'Normal'],
-        ]
-        #self.economy_history = [eh for eh in self.economy_history if eh[0] > self.t0]
-        self.economy_history.append([np.datetime64(datetime.datetime.now()), self.economy_history[-1][1]])
+        self.economy_history.append([np.datetime64(datetime.datetime.now()), economy_history[-1][1]])
 
     def get_commodity(self, commodity, maximum_quality=None):
         rows = [df.loc[commodity] for df in self.history]
