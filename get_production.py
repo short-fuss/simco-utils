@@ -94,7 +94,7 @@ commodity_dict = OrderedDict({
     89: 'Jet Engine',
     90: 'Sub-orbital 2nd Stage',
     91: 'Sub-orbital Rocket',
-    92: 'Orbital Booster'
+    92: 'Orbital Booster',
     93: 'Starship',
     94: 'BFR',
     95: 'Jumbo Jet',
@@ -118,15 +118,7 @@ commodity_dict = OrderedDict({
     113: 'Materials Research'
 })
 
-def create_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--economy", type=str, default="normal", help="Economy")
-    return parser
-
 def main():
-    parser = create_parser()
-    args = parser.parse_args()
-
     with requests.Session() as r:
         prod = []
         for id, commodity in tqdm.tqdm(commodity_dict.items()): 
@@ -136,7 +128,7 @@ def main():
         df = pd.DataFrame.from_records(prod, index='Commodity').sort_index()
         print(df)
 
-        df.to_csv(f'production_rates_{args.economy}.csv')
+        df.to_csv(f'production_rates.csv')
 
 if __name__ == "__main__":
     main()
