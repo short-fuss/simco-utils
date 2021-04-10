@@ -29,9 +29,11 @@ Note how the economy is also indicated in the axis abscissa. This is made possib
 
 
 ## Sales Office
-The `parse_salesoffice.py` utility enables you to keep track of your Sales Office orders. To use this utility, you have two options:
 
-### 1. PNG screenshots
+### Parsing
+The `parse_salesoffice.py` utility enables you to extract your Sales Office orders. To use this utility, you have two options:
+
+#### 1. PNG screenshots
 The first option is to save screenshots of your orders (as PNG files). E.g.
 <p align="center">
   <img width="500" src="example_salesoffice.png" alt="Sales Office orders example">
@@ -52,7 +54,16 @@ There are several drawbacks of using this approach:
 - You will need multiple screenshots for each sales office when you have more than ~5 levels.
 - Currently, this approach doesn't identify the quantity of each commodity required, because tesseract doesn't identify text within the orange striped bars
 
-### 2. Text dump
+#### 2. Text dump
 The easier and better option is to copy the text from the page (Ctrl-A, Ctrl-C), and save to a `.txt` file. The same call as above works, with the internal logic distinguishing between `.png` and `.txt` files, and processing accordingly.
 
 By default, the HDF files are stored in the folder `SalesOfficePrices`, but this can be changed by providing your own to the command-line option `--output_dir`.
+
+### Analysis
+The `analyse_salesoffice.py` script then enables you to identify the current prices, which takes a weighted average of your prices data. Higher weights are given to more recent prices, and the degree of preference is controlled by the argument `weight_decay`.
+
+### Visualization
+To visualize the prices and quantities, use the `sales_office.ipynb` notebook. This provides a plot of all your prices data which looks like this:
+<p align="center">
+  <img width="1000" src="as_prices.png" alt="Sales Office orders example">
+</p>
