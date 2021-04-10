@@ -4,7 +4,7 @@ import pathlib
 import argparse
 
 df0 = pd.DataFrame(columns=['Time', 'Economy', 'SEP', 'Luxury Jet', 'Jumbo', 'SOR', 'BFR', 'Satellite'])
-mapper = {'Sin': 'SEP', 'Lux':'Luxury Jet', 'Jum': 'Jumbo', 'Sub': 'SOR', 'Sat': 'Satellite'}
+mapper = {'Sin': 'SEP', 'sin': 'SEP', 'Lux':'Luxury Jet', 'lux':'Luxury Jet', 'Jum': 'Jumbo', 'Sub': 'SOR', 'sub': 'SOR', 'Sat': 'Satellite', 'sat': 'Satellite'}
     
 def load_prices(prices_dir: str):
     dfs = []
