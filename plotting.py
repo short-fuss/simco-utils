@@ -93,7 +93,8 @@ class Prices:
 
         self.colors = prop_cycle.by_key()['color']
         self.t0 = initial_time
-        self.economy_history.append([np.datetime64(datetime.datetime.now()), economy_history[-1][1]])
+        current = [np.datetime64(datetime.datetime.now()), economy_history[-1][1]]
+        self.economy_history = np.concatenate([economy_history, [current]])
 
     def get_commodity(self, commodity, maximum_quality=None):
         rows = [df.loc[commodity] for df in self.history]
@@ -125,7 +126,7 @@ class Prices:
         #ax.legend()
 
         economy = self.economy_history
-        es, indices = np.unique([e[1] for e in self.economy_history], return_index=True)
+        es, indices = np.unique([e[1] for e in economy], return_index=True)
         xlim = ax.get_xlim()
         ylim = ax.get_ylim()
         for i in range(len(economy) - 1):
